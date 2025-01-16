@@ -1,10 +1,11 @@
 from src.RequestGenerator.CategoryEnum import Category
+from src.RequestGenerator.ColorEnum import Color
 from src.RequestGenerator.StateEnum import State
 
 
 class SearchUrl:
 
-    url = "https://www.olx.ua/uk/moda-i-stil"
+    url = "https://www.olx.ua/uk/moda-i-stil/"
     queries = ""
     category = ""
 
@@ -24,24 +25,23 @@ class SearchUrl:
             self.queries += "&search[filter_enum_state][0]=new"
 
     def add_category(self, category: Category):
-        self.category = category.value
+        self.category += category.value
 
-    def add_is_for_blackout(self, is_for_blackout: bool):
-        if is_for_blackout:
-            self.queries += "&search[filter_enum_for_blackout][0]=1"
+    def add_color(self, color: Color):
+        self.queries += color.value
 
     def get_url(self):
         return f"{self.url}{self.category}{self.queries}"
 
 
 if __name__ == "__main__":
-    # приклад
+    # example
     var = SearchUrl("кросівки")
     var.add_state(State.new)
-    var.add_category(Category.spec_clothes)
-    var.add_is_for_blackout(False)
+    var.add_category(Category.men_footwear)
     var.add_price_from(500)
     var.add_price_to(5000)
+    var.add_color(Color.black)
+    var.add_color(Color.pink)
     print(var.get_url())
 
-# це поки перша версія, треба ще додати інші параметри
